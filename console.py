@@ -12,6 +12,48 @@ from models.amenity import Amenity
 from models.review import Review
 
 
+def identify(args):
+    lili_reason = 0
+
+    if not args:
+        return
+
+    if args[0] == '"' and args[-1] == '"':
+        args = args[1:-1]
+        args = args.replace("_", " ")
+        for i in range(len(args)):
+            if args[i] == '"':
+                if ord(args[i-1]) != 92:
+
+                    if lili_reason:
+                        print(args)
+                        args = args[0:i] + chr(92) + args[i:]
+                        print(args)
+                    else:
+                        return
+        args = args.replace(chr(92) + '"', '"') #sin \" internas
+
+        return args
+    elif '.' in args:
+        count_dot = 0
+        for i in args:
+            if i == '.':
+                count_dot += 1
+
+        if count_dot == 1:
+            try:
+                args = float(args)
+            except ValueError:
+                return
+            return args
+    else:
+        try:
+            args = int(args)
+        except ValueError:
+            return
+        return args
+
+
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
 
@@ -115,16 +157,34 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+        args1 = args.split(" ")
+        new_dict = {}
+
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+
+        for x in range(1, len(args1)):
+            parameter = args1[x]
+            for i in range(len(parameter)):
+                if parameter[i] == "=":
+                    key = parameter[:i]
+                    value = parameter[i+1:]
+                    break
+
+            #pasarle el value a identity
+            value = identify(value)
+            if value:
+                new_dict[key] = value
+
+
+        if args1[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        new_instance = HBNBCommand.classes[args1[0]]()
+        new_instance.__dict__.update(new_dict)
         storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
