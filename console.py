@@ -31,7 +31,7 @@ def identify(args):
                         print(args)
                     else:
                         return
-        #sin \" internas
+
         args = args.replace(chr(92) + '"', '"')
 
         return args
@@ -72,7 +72,6 @@ class HBNBCommand(cmd.Cmd):
              'max_guest': int, 'price_by_night': int,
              'latitude': float, 'longitude': float
             }
-
 
     def precmd(self, line):
         """Reformat command line for advanced command syntax.
@@ -163,11 +162,9 @@ class HBNBCommand(cmd.Cmd):
                     value = parameter[i+1:]
                     break
 
-            #pasarle el value a identity
             value = identify(value)
-            if value:
+            if value is not None:
                 new_dict[key] = value
-
 
         if args1[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
