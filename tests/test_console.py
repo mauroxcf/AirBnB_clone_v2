@@ -29,6 +29,11 @@ class TestHBNBCommand(unittest.TestCase):
         self.assertIsNotNone(HBNBCommand.do_all.__doc__)
         self.assertIsNotNone(HBNBCommand.do_update.__doc__)
 
+    def test_pep8(self):
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['console.py'])
+        self.assertEqual(result.total_errors, 0)
+
     def test_aa_create(self):
         """ create tests """
         no_stdout = " > /dev/null 2>&1"
@@ -39,7 +44,7 @@ class TestHBNBCommand(unittest.TestCase):
             temp = json.load(f)
         self.assertTrue(temp)
 
-    def test_aa_create(self):
+    def test_ab_create(self):
         """ create tests """
         no_stdout = " > /dev/null 2>&1"
         run("rm file.json " + no_stdout)
@@ -49,53 +54,12 @@ class TestHBNBCommand(unittest.TestCase):
             temp = json.load(f)
         self.assertTrue(temp)
 
-'''
-    def test_ab_create(self):
-        """ create tests """
-        with patch("sys.stdout", new=StringIO()) as capt:
-            self.HBNB.onecmd("create Place")
-            value_place = capt.getvalue().strip()
-            self.assertTrue(value_place)
-
     def test_ac_create(self):
         """ create tests """
-        with patch("sys.stdout", new=StringIO()) as capt:
-            self.HBNB.onecmd("create BaseModel")
-            value_basemodel = capt.getvalue().strip()
-
-    def test_ad_create(self):
-        """ create tests """
-        with patch("sys.stdout", new=StringIO()) as capt:
-            self.HBNB.onecmd("create User")
-            value_user = capt.getvalue().strip()
-
-    def test_ae_create(self):
-        """ create tests """
-        with patch("sys.stdout", new=StringIO()) as capt:
-            self.HBNB.onecmd("create Amenity")
-            value_amenity = capt.getvalue().strip()
-
-    def test_af_create(self):
-        """ create tests """
-        with patch("sys.stdout", new=StringIO()) as capt:
-            self.HBNB.onecmd("create Review")
-            value_review = capt.getvalue().strip()
-
-    def test_ag_create(self):
-        """ create tests """
-        with patch("sys.stdout", new=StringIO()) as capt:
-            self.HBNB.onecmd("create City")
-            value_city = capt.getvalue().strip()
-
-    def test_ah_create(self):
-        """ create tests """
-        with patch("sys.stdout", new=StringIO()) as capt:
-            self.HBNB.onecmd('create State name="California"')
-            value_state = capt.getvalue().strip()
-
-    def test_ai_create(self):
-        """ create tests """
-        with patch("sys.stdout", new=StringIO()) as capt:
-            self.HBNB.onecmd('create City state_id="1" name="San_Francisco"')
-            value_state = capt.getvalue().strip()
-'''
+        no_stdout = " > /dev/null 2>&1"
+        run("rm file.json " + no_stdout)
+        run('echo create City state_id="1" name="San_Francisco" | ./console.py' + no_stdout)
+        run("echo 'all' | ./console.py" + no_stdout)
+        with open("file.json", 'r') as f:
+            temp = json.load(f)
+        self.assertTrue(temp)
