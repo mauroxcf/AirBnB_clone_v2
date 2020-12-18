@@ -4,6 +4,7 @@
 
 import json
 from models.base_model import BaseModel, Base
+from models.user import User
 from models.city import City
 from models.state import State
 from sqlalchemy import create_engine
@@ -13,7 +14,6 @@ import os
 """ from models.amenity import Amenity """
 """ from models.place import Place """
 """ from models.review import Review """
-""" from models.user import User """
 
 # Get environment variables
 HBNB_MYSQL_USER = os.getenv('HBNB_MYSQL_USER')
@@ -55,12 +55,12 @@ class DBStorage:
         else:
             st = session.query(State).all()
             ct = session.query(City).all()
-            """ us = session.query(User).all()
-            rw = session.query(Review).all()
+            us = session.query(User).all()
+            """rw = session.query(Review).all()
             pl = session.query(Place).all()
             am = session.query(Amenity).all() """
 
-            querys_list = [st, ct]
+            querys_list = [st, ct, us]
             """ for i in querys:
                 if type(i) is list: """
 
