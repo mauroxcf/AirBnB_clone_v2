@@ -20,7 +20,7 @@ class test_state(test_basemodel):
     def test_name3(self):
         """ """
         new = self.value()
-        self.assertEqual(type(new.name), str)
+        self.assertEqual(type(new.name), type(None))
 
     def test_aa_create_state(self):
         """ """
