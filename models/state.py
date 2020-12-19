@@ -17,8 +17,8 @@ class State(BaseModel, Base):
     # Check engine
     cities = relationship(
         "City",
-        backref="states",
-        cascade="all, delete, delete-orphan"
+        backref = "states",
+        cascade = "all, delete, delete-orphan"
     )
 
     @property
@@ -29,3 +29,4 @@ class State(BaseModel, Base):
             if self.id == city.state_id:
                 list_city.append(City)
         return list_city
+
