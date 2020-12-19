@@ -58,7 +58,9 @@ class TestHBNBCommand(unittest.TestCase):
         """ create tests """
         no_stdout = " > /dev/null 2>&1"
         run("rm file.json " + no_stdout)
-        run('echo create City state_id="1" name="San_Francisco" | ./console.py' + no_stdout)
+        command = 'echo create City state_id="1" name="San_Francisco" '
+        command = command + '| ./console.py '
+        run(command + no_stdout)
         run("echo 'all' | ./console.py" + no_stdout)
         with open("file.json", 'r') as f:
             temp = json.load(f)
