@@ -24,20 +24,19 @@ class Place(BaseModel, Base):
     amenity_ids = []
 
     """ The type of storage used. It can be “file” (using FileStorage) """
-    if getenv('HBNB_TYPE_STORAGE') = "db":
+    if getenv('HBNB_TYPE_STORAGE') == "db":
         reviews = relationship(
             "Review",
             backref="user",
             cascade="all, delete, delete-orphan"
         )
-
-    """ The type of storage used. db (using DBStorage) """
+        """ The type of storage used. db (using DBStorage) """
     else:
         @property
         def reviews_method(self):
             """ Getter reviews """
             list_reviews = []
-            for i in list(models.storage.all(Review)):
-                if self.id == i.place_id:
+            for review in list(models.storage.all(Review)):
+                if self.id == review.place_id:
                     list_reviews.append(Review)
             return list_reviews
