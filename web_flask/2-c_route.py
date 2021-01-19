@@ -21,6 +21,7 @@ def holberton():
 @app.route('/c/<text>', strict_slashes=False)
 def c_is(text):
     """ function display a text"""
+    text = text.replace('_', ' ')
     return "C %s" % text
 
 if __name__ == '__main__':
