@@ -61,7 +61,11 @@ h4{
     justify-content: space-between;
     display:none;
     height: 300px;
-    overflow: scroll;
+    overflow-y: scroll;
+}
+
+.popover::-webkit-scrollbar{
+    display: none;
 }
 
 ul{
